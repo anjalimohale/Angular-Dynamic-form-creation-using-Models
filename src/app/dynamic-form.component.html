@@ -1,0 +1,16 @@
+<div>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" showform>
+   
+      <div>
+        <app-field [fields]="fields" [form]="form"></app-field>
+      </div>
+   
+      <div>
+        <button mat-button color="primary" type="submit" [disabled]="!form.valid">Save</button>
+      </div>
+    </form>
+   
+    <div *ngIf="payLoad">
+      <strong>Saved the following values</strong><br><pre>{{result | json}}</pre>
+    </div>
+  </div>

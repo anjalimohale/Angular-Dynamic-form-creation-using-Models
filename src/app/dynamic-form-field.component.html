@@ -1,0 +1,46 @@
+<div [formGroup]="form">
+    <mat-accordion>
+   <div *ngFor="let k1 of fields">
+      <mat-expansion-panel>
+          <mat-expansion-panel-header >
+      {{k1.key}}
+          </mat-expansion-panel-header>
+          <mat-grid-list cols="3" rowHeight="3:1">  
+    <div *ngFor="let k2 of k1.children" >
+        <mat-grid-tile>  
+      <div [ngSwitch]="k2.ControlType">
+          <!-- <label>{{k2.title}}</label> -->
+           <mat-form-field *ngSwitchCase="'textbox'"> 
+             <input matInput [formControlName]="k1.key+'--'+k2.name"
+             [placeholder]="k2.title" [type]="k2.type">
+              <mat-error *ngIf="form.controls[k1.key+'--'+k2.name].hasError('required')">
+                  {{k2.title}}  is required
+             </mat-error> 
+            </mat-form-field>
+         
+              <mat-form-field *ngSwitchCase="'dropdown'"> 
+              <mat-select  [placeholder]="k2.title" [formControlName]="k1.key+'--'+k2.name">
+                <mat-option *ngFor="let opt of k2.options" [value]="objkey(opt)[0]"> {{opt[objkey(opt)]}}</mat-option>
+              </mat-select>   
+               <mat-error *ngIf="form.controls[k1.key+'--'+k2.name].hasError('required')">
+                  {{k2.title}}  is required
+              </mat-error> 
+          </mat-form-field> 
+
+              <div *ngSwitchCase="'checkbox'">
+              <mat-checkbox [checked]="k2.checked" [formControlName]="k1.key+'--'+k2.name">{{k2.title}}</mat-checkbox>
+              <mat-error *ngIf="form.controls[k1.key+'--'+k2.name].hasError('required')">
+                  {{k2.title}}  is required
+              </mat-error> 
+            </div>
+    </div> 
+    </mat-grid-tile>
+  </div>
+  </mat-grid-list>
+</mat-expansion-panel>
+  </div>
+</mat-accordion>
+  </div>
+
+  <!-- <mat-checkbox [checked]="flag">dsfsdfdsfdsf</mat-checkbox> -->
+  <!-- {{form.value | json}} -->
